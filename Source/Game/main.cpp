@@ -15,6 +15,7 @@
 #include "SpaceGame.h"
 #include "Renderer/Font.h"
 #include "Renderer/Text.h"
+#include "Renderer/Texture.h"
 #include "Core/File.h"
 
 #include <SDL3/SDL.h>
@@ -51,6 +52,8 @@ int main(int argc, char* argv[]) {
     viper::GetEngine().GetAudioSystem().AddSound("close-hat.wav", "close-hat");
     viper::GetEngine().GetAudioSystem().AddSound("open-hat.wav", "open-hat");
 
+	std::shared_ptr<viper::Texture> kermit = std::make_shared<viper::Texture>();
+	kermit->Load("kermit.png", viper::GetEngine().GetRenderer());
 
     while (!quit) {
         viper::GetEngine().Update();
@@ -85,6 +88,9 @@ int main(int argc, char* argv[]) {
             viper::GetEngine().GetRenderer().SetColor((uint8_t)viper::random::getInt(0, 255), viper::random::getInt(0, 255), viper::random::getInt(0, 255), 255);
             viper::GetEngine().GetRenderer().DrawPoint(star.x, star.y);
         }
+
+        viper::GetEngine().GetRenderer().DrawTexture(kermit.get(), 30, 30);
+
         viper::GetEngine().GetRenderer().Present();
     }
     viper::GetEngine().Shutdown();

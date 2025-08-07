@@ -13,6 +13,7 @@
 #include <SDL3/SDL_scancode.h>
 #include "../SpaceGame.h"
 
+
 void Player::Update(float dt) {
 	viper::Particle particle;
 	particle.position = transform.position;
