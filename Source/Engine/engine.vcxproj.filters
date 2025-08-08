@@ -89,6 +89,9 @@
     <ClInclude Include="Renderer\Texture.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Logger.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine.cpp">
