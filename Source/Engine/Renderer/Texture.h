@@ -1,11 +1,12 @@
 #pragma once
 #include <string>
+#include "../Resources/Resource.h"
 #include "../Math/Vector2.h"
 
 struct SDL_Texture;
 
 namespace viper {
-	class Texture {
+	class Texture : public Resource {
 	public:
 		Texture() = default;
 		~Texture();

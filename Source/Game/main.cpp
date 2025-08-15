@@ -8,6 +8,7 @@
 #include "Core/Time.h"
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
+#include "Resources/ResourcesManager.h"
 #include "engine.h"
 #include "Framework/Actor.h"
 #include "Framework/Scene.h"
@@ -52,8 +53,7 @@ int main(int argc, char* argv[]) {
     viper::GetEngine().GetAudioSystem().AddSound("close-hat.wav", "close-hat");
     viper::GetEngine().GetAudioSystem().AddSound("open-hat.wav", "open-hat");
 
-	std::shared_ptr<viper::Texture> kermit = std::make_shared<viper::Texture>();
-	kermit->Load("kermit.png", viper::GetEngine().GetRenderer());
+	auto kermit = viper::Resources().Get<viper::Texture>("kermit.png", viper::GetEngine().GetRenderer());
 
     while (!quit) {
         viper::GetEngine().Update();
@@ -89,7 +89,8 @@ int main(int argc, char* argv[]) {
             viper::GetEngine().GetRenderer().DrawPoint(star.x, star.y);
         }
 
-        viper::GetEngine().GetRenderer().DrawTexture(kermit.get(), 30, 30);
+		viper::Texture* k = kermit.get();
+        viper::GetEngine().GetRenderer().DrawTexture(k, 30, 30);
 
         viper::GetEngine().GetRenderer().Present();
     }

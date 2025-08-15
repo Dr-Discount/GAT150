@@ -4,6 +4,7 @@
 #include "Framework/Scene.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/ParticleSystem.h"
+#include "Resources/ResourcesManager.h"
 #include "Input/InputSystem.h"
 #include "Core/Random.h"
 #include "Engine.h"
@@ -12,15 +13,9 @@
 bool SpaceGame::Initialize() {
 	m_scene = std::make_unique<viper::Scene>(this);
 
-    m_titleFont = std::make_shared<viper::Font>();
-    m_titleFont->Load("Righteous-Regular.ttf", 48);
-
-	m_uiFont = std::make_shared<viper::Font>();
-	m_uiFont->Load("Righteous-Regular.ttf", 48);
-
-	m_titleText = std::make_unique<viper::Text>(m_titleFont);
-	m_scoreText = std::make_unique<viper::Text>(m_uiFont);
-	m_livesText = std::make_unique<viper::Text>(m_uiFont);
+    m_titleText = std::make_unique<viper::Text>(viper::Resources().Get<viper::Font>("Righteous-Regular.ttf", 48));
+	m_scoreText = std::make_unique<viper::Text>(viper::Resources().Get<viper::Font>("Righteous-Regular.ttf", 48));
+	m_livesText = std::make_unique<viper::Text>(viper::Resources().Get<viper::Font>("Righteous-Regular.ttf", 48));
 	
     return true;
 }

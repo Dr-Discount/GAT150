@@ -29,6 +29,11 @@ namespace viper::math {
 		return result + min;
 	}
 
+	template<typename T>
+	inline T sign(T v) {
+		return (v < 0) ? (T)-1 : (v > 0) ? (T)1 : (T)0;
+	}
+
 	using std::min;
 	using std::max;
 	using std::clamp;

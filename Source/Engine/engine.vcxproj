@@ -136,7 +136,7 @@
       <AdditionalDependencies>sdl3.lib</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl3.lib;fmod_vc.lib;sdl3_image.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Source\ThirdParty\fmod\core\lib\$(PlatformTarget);$(SolutionDir)Source\ThirdParty\SDL3\lib\$(PlatformTarget);%(AdditionalLibraryDirectories);$(SolutionDir)Source\ThirdParty\SDL3\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
@@ -162,7 +162,7 @@
       <AdditionalDependencies>sdl3.lib</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>sdl3.lib;fmod_vc.lib;sdl3_image.lib</AdditionalDependencies>
+      <AdditionalDependencies>sdl3.lib</AdditionalDependencies>
     </Lib>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Source\ThirdParty\SDL3\lib\$(PlatformTarget);$(SolutionDir)Source\ThirdParty\fmod\core\lib\$(PlatformTarget);%(AdditionalLibraryDirectories);$(SolutionDir)Source\ThirdParty\SDL3\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
@@ -206,6 +206,8 @@
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\Text.h" />
     <ClInclude Include="Renderer\Texture.h" />
+    <ClInclude Include="Resources\Resource.h" />
+    <ClInclude Include="Resources\ResourcesManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

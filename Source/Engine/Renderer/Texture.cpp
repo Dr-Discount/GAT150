@@ -32,8 +32,7 @@ namespace viper {
         return true;
     }
 
-    vec2 Texture::GetSize()
-    {
+    vec2 Texture::GetSize() {
         float w, h;
 		SDL_GetTextureSize(m_texture, &w, &h);
         return vec2{ w, h };

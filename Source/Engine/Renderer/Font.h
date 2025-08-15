@@ -1,8 +1,10 @@
 #pragma once
+#include "../Resources/Resource.h"
+#include <string>
 #include "Renderer.h"
 
 namespace viper {
-	class Font {
+	class Font : public Resource {
 	public:
 		Font() = default;
 		~Font();
