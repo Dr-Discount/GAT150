@@ -68,6 +68,7 @@ void SpaceGame::Update(float dt) {
                 enemyModel = std::make_shared < viper::Model>(GameData::enemyPoints3, vec3{ 255, 255, 255 });
     			break;
             };
+
             
             viper::Transform transform{ vec2{ viper::random::getReal() * 1280, viper::random::getReal() * 1024 }, 0, 7 };
             std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
