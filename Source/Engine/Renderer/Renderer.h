@@ -28,6 +28,7 @@ namespace viper {
 
 		friend class Texture;
 		void DrawTexture(class Texture* texture, float x, float y);
+		void DrawTexture(class Texture* texture, float x, float y, float angle, float scale = 1);
 	private:
 		int m_width{ 0 };
 		int m_height{ 0 };

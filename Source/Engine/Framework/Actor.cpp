@@ -17,10 +17,11 @@ namespace viper {
 	void Actor::Draw(Renderer& renderer) {
 		if (destroyed) return;
 
-		m_model->Draw(renderer, transform);
+		renderer.DrawTexture(m_texture.get(), transform.position.x, transform.position.y, transform.rotation, transform.scale);
+		//m_model->Draw(renderer, transform);
 	}
 
 	float Actor::GetRadius() {
-		return (m_model) ? m_model->GetRadius() * transform.scale * 0.9f : 0;
+		return (m_texture) ? (m_texture->GetSize().Length() * 0.5f) * transform.scale * 0.9f : 0;
 	}
 }

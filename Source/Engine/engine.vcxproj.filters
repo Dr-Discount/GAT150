@@ -101,6 +101,9 @@
     <ClInclude Include="Resources\ResourcesManager.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Singleton.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine.cpp">

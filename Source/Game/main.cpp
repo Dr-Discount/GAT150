@@ -53,7 +53,11 @@ int main(int argc, char* argv[]) {
     viper::GetEngine().GetAudioSystem().AddSound("close-hat.wav", "close-hat");
     viper::GetEngine().GetAudioSystem().AddSound("open-hat.wav", "open-hat");
 
-	auto kermit = viper::Resources().Get<viper::Texture>("kermit.png", viper::GetEngine().GetRenderer());
+	auto kermit = viper::Resources().Get<viper::Texture>("red_02.png", viper::GetEngine().GetRenderer());
+	auto background = viper::Resources().Get<viper::Texture>("Space.png", viper::GetEngine().GetRenderer());
+
+    float rotate = 0;
+    vec2 starSpeed{ 50.0f, 0 };
 
     while (!quit) {
         viper::GetEngine().Update();
@@ -65,6 +69,8 @@ int main(int argc, char* argv[]) {
             }
         }
 
+        //float lenght = starSpeed.Length();
+
         if (viper::GetEngine().GetInputSystem().GetKeyPressed(SDL_SCANCODE_ESCAPE)) {
             quit = true;
 		}
@@ -74,12 +80,9 @@ int main(int argc, char* argv[]) {
         viper::GetEngine().GetRenderer().SetColor((float)color.r, color.g, color.b);
         viper::GetEngine().GetRenderer().Clear();
 
-		game->Draw(viper::GetEngine().GetRenderer());
-
-        vec2 starSpeed{ 50.0f, 0 };
-		float lenght = starSpeed.Length();
-
-        for (auto& star : stars) {
+		viper::GetEngine().GetRenderer().DrawTexture(background.get(), 800, 900, 0, 1.0f);
+        
+        /*for (auto& star : stars) {
 			star = star += starSpeed * viper::GetEngine().GetTime().GetDeltaTime();
 
 			if (star.x > 1280) star.x = 0;
@@ -87,11 +90,12 @@ int main(int argc, char* argv[]) {
 
             viper::GetEngine().GetRenderer().SetColor((uint8_t)viper::random::getInt(0, 255), viper::random::getInt(0, 255), viper::random::getInt(0, 255), 255);
             viper::GetEngine().GetRenderer().DrawPoint(star.x, star.y);
-        }
+        }*/
 
-		viper::Texture* k = kermit.get();
-        viper::GetEngine().GetRenderer().DrawTexture(k, 30, 30);
+		game->Draw(viper::GetEngine().GetRenderer());
 
+		rotate += 90 * viper::GetEngine().GetTime().GetDeltaTime();
+        
         viper::GetEngine().GetRenderer().Present();
     }
     viper::GetEngine().Shutdown();

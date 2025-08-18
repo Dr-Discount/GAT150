@@ -23,6 +23,7 @@ public:
 	void Draw(viper::Renderer& renderer) override;
 	void Shutdown() override;
 
+	void SpawnEnemy();
 	void OnPlayerDeath();
 private:
 	GameState m_gameState = GameState::Initializee;

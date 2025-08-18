@@ -6,6 +6,8 @@
 #include "Framework/Game.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/ParticleSystem.h"
+#include "Renderer/Texture.h"
+#include "Resources/ResourcesManager.h"
 #include "Audio/AudioSystem.h"
 #include "Input/InputSystem.h"
 #include "Math/Vector3.h"
@@ -44,12 +46,12 @@ void Player::Update(float dt) {
 		fireTimer = fireTime;
 		viper::GetEngine().GetAudioSystem().PlaySound("bass");
 
-		std::shared_ptr<viper::Model> rocketM = std::make_shared < viper::Model>(GameData::playerPoints, vec3{ 255, 0, 0 });
-		viper::Transform transform{ this->transform.position, this->transform.rotation, 2 };
-		auto rocket = std::make_unique<Rocket>(transform, rocketM);
+		//std::shared_ptr<viper::Model> rocketM = std::make_shared < viper::Model>(GameData::playerPoints, vec3{ 255, 0, 0 });
+		viper::Transform transform{ this->transform.position, this->transform.rotation, 1.2 };
+		auto rocket = std::make_unique<Rocket>(transform, viper::Resources().Get<viper::Texture>("Rocket.png", viper::GetEngine().GetRenderer()));
 		rocket->damping = 0.5f;
 		rocket->speed = 1000.0f;
-		rocket->lifespan = 0.7f;
+		rocket->lifespan = 0.85f;
 		rocket->name = "rocket";
 		rocket->tag = "rocket";
 
