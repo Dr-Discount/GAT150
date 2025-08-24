@@ -1,7 +1,4 @@
 #include "File.h"
-#include <filesystem>
-#include <iostream>
-#include <fstream>
 
 namespace viper {
     std::string GetCurrentDirectory() {

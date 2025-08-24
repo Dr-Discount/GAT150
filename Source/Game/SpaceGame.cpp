@@ -1,12 +1,6 @@
 #include "SpaceGame.h"
 #include "Game/Player.h"
 #include "Game/Enemy.h"
-#include "Framework/Scene.h"
-#include "Renderer/Renderer.h"
-#include "Renderer/ParticleSystem.h"
-#include "Resources/ResourcesManager.h"
-#include "Input/InputSystem.h"
-#include "Core/Random.h"
 #include "Engine.h"
 #include "Game/GameData.h"
 

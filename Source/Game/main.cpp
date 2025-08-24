@@ -1,23 +1,5 @@
-#include "Renderer/Renderer.h"
-#include "Renderer/Model.h"
-#include "Core/Random.h"
-#include "Math/Math.h"
-#include "Math/Vector2.h"
-#include "Math/Vector3.h"
-#include "Math/Transform.h"
-#include "Core/Time.h"
-#include "Input/InputSystem.h"
-#include "Audio/AudioSystem.h"
-#include "Resources/ResourcesManager.h"
-#include "engine.h"
-#include "Framework/Actor.h"
-#include "Framework/Scene.h"
 #include "Game/Player.h"
 #include "SpaceGame.h"
-#include "Renderer/Font.h"
-#include "Renderer/Text.h"
-#include "Renderer/Texture.h"
-#include "Core/File.h"
 
 #include <SDL3/SDL.h>
 #include <iostream>
@@ -27,13 +9,10 @@
 int main(int argc, char* argv[]) {
     viper::SetCurrentDirectory("Assets");
 
-	//initialize game
 	viper::GetEngine().Initialize();
 
 	std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
 	game->Initialize();
-
-	//viper::Actor actor{ transform, arrow };
 
     SDL_Event e;
     bool quit = false;
@@ -42,8 +21,6 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < 100; ++i) {
         stars.push_back(vec2{ static_cast<float>(viper::random::getInt(0, 1280)), static_cast<float>(viper::random::getInt(0, 1024)) });  
 	}
-
-    //std::vector<vec2> points;
 
     //audio
     viper::GetEngine().GetAudioSystem().AddSound("test.wav", "test");

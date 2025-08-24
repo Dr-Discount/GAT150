@@ -1,5 +1,4 @@
 #include "Text.h"
-#include "../Core/Logger.h"
 
 namespace viper {
 	Text::~Text() {

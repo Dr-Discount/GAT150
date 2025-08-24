@@ -1,8 +1,4 @@
 #include "Texture.h"
-#include <SDL3/SDL.h>
-#include <SDL3_image/SDL_image.h>
-#include "../Core/Logger.h"
-#include <iostream>
 #include "Renderer.h"
 
 namespace viper {

@@ -1,13 +1,7 @@
 #include "Enemy.h"
-#include "Engine.h"
-#include "Framework/Scene.h"
-#include "Renderer/Renderer.h"
-#include "Framework/Game.h"
-#include "Audio/AudioSystem.h"
 #include "Player.h"
 #include "Rocket.h"
 #include "GameData.h"
-#include "Math/Vector3.h"
 
 void Enemy::Update(float dt) {
 	vec2 force = movementDirection * speed;
