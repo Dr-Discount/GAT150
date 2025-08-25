@@ -26,7 +26,11 @@ void Player::Update(float dt) {
 
 	vec2 direction{ 1, 0 };
 	vec2 force = direction.Rotate(viper::math::degToRad(transform.rotation)) * thrust * speed;
-	velocity += force * dt;
+	//velocity += force * dt;
+	auto rb = GetComponent<viper::RigidBody>();
+	if (rb) {
+		rb->velocity += force * dt;
+	}
 
 	transform.position.x = viper::math::wrap(transform.position.x, 0.0f, (float)viper::GetEngine().GetRenderer().GetWidth());
 	transform.position.y = viper::math::wrap(transform.position.y, 0.0f, (float)viper::GetEngine().GetRenderer().GetHeight());
@@ -36,14 +40,19 @@ void Player::Update(float dt) {
 		fireTimer = fireTime;
 		viper::GetEngine().GetAudioSystem().PlaySound("bass");
 
-		//std::shared_ptr<viper::Model> rocketM = std::make_shared < viper::Model>(GameData::playerPoints, vec3{ 255, 0, 0 });
 		viper::Transform transform{ this->transform.position, this->transform.rotation, 1.2 };
-		auto rocket = std::make_unique<Rocket>(transform, viper::Resources().Get<viper::Texture>("Rocket.png", viper::GetEngine().GetRenderer()));
-		rocket->damping = 0.5f;
-		rocket->speed = 1000.0f;
-		rocket->lifespan = 0.85f;
+		auto rocket = std::make_unique<Rocket>(transform);
+		rocket->speed = 2000.0f;
+		rocket->lifespan = 1.1f;
 		rocket->name = "rocket";
 		rocket->tag = "rocket";
+
+		auto spriteRenderer = std::make_unique<viper::SpriteRenderer>();
+		spriteRenderer->textureName = "Rocket.png";
+		rocket->AddComponent(std::move(spriteRenderer));
+
+		auto rb = std::make_unique<viper::RigidBody>();
+		rocket->AddComponent(std::move(rb));
 
 		scene->AddActor(std::move(rocket));
 	}

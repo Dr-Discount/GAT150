@@ -12,8 +12,8 @@ public:
 	vec2 rotation{ 0, 0 };
 
 	Enemy() = default;
-	Enemy(viper::Transform transform, viper::res_t<viper::Texture> texture)
-		: Actor{ transform, texture } {
+	Enemy(viper::Transform transform)
+		: Actor{transform} {
 	}
 
 	void Update(float dt) override;

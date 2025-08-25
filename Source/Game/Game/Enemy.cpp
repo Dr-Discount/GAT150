@@ -5,7 +5,11 @@
 
 void Enemy::Update(float dt) {
 	vec2 force = movementDirection * speed;
-	velocity += force * dt;
+	//velocity += force * dt;
+	auto rb = GetComponent<viper::RigidBody>();
+	if (rb) {
+		rb->velocity += force * dt;
+	}
 
 	transform.position.x = viper::math::wrap(transform.position.x, 0.0f, (float)viper::GetEngine().GetRenderer().GetWidth());
 	transform.position.y = viper::math::wrap(transform.position.y, 0.0f, (float)viper::GetEngine().GetRenderer().GetHeight());

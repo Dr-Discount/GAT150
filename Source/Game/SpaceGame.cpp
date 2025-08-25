@@ -30,12 +30,18 @@ void SpaceGame::Update(float dt) {
         m_gameState = GameState::StartRound;
         break;
     case SpaceGame::GameState::StartRound: {
-        //std::shared_ptr<viper::Model> playerM = std::make_shared < viper::Model>(GameData::playerPoints, vec3{ 0, 0, 255 });
         viper::Transform transform{ vec2{600 , 512}, 0, 1.5f };
-        auto player = std::make_unique<Player>(transform, viper::Resources().Get<viper::Texture>("red_02.png", viper::GetEngine().GetRenderer()));
-        player->damping = 0.5f;
+        auto player = std::make_unique<Player>(transform);
         player->name = "Player";
         player->tag = "Player";
+
+		auto spriteRenderer = std::make_unique<viper::SpriteRenderer>();
+		spriteRenderer->textureName = "red_02.png";
+        player->AddComponent(std::move(spriteRenderer));
+        
+		auto rb = std::make_unique<viper::RigidBody>();
+		rb->damping = 0.5f;
+		player->AddComponent(std::move(rb));
 
         m_scene->AddActor(std::move(player));
         m_gameState = GameState::Game;
@@ -99,11 +105,28 @@ void SpaceGame::Shutdown() {
 }
 
 void SpaceGame::SpawnEnemy() {
-    viper::Transform transform{ vec2{ viper::random::getReal() * 1280, viper::random::getReal() * 1024 }, 0, 3 };
-    std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, viper::Resources().Get<viper::Texture>("Rock_1.png", viper::GetEngine().GetRenderer()));
-    enemy->damping = 1.0f;
+    Player* player = dynamic_cast<Player*>(m_scene->GetActorByName("Player"));
+    vec2 playerPos = player ? player->GetTransform().position : vec2{ 0, 0 };
+    const float minDistance = 150.0f;
+
+    vec2 spawnPos;
+    do {
+        spawnPos = vec2{ viper::random::getReal() * 1280, viper::random::getReal() * 1024 };
+    } while ((spawnPos - playerPos).Length() < minDistance);
+
+    viper::Transform transform{ spawnPos, 0, 3 };
+    std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform);
     enemy->speed = 400;
     enemy->tag = "enemy";
+
+	auto spriteRenderer = std::make_unique<viper::SpriteRenderer>();
+	spriteRenderer->textureName = "Rock_1.png";
+	enemy->AddComponent(std::move(spriteRenderer));
+
+    auto rb = std::make_unique<viper::RigidBody>();
+    rb->damping = 1.0f;
+    enemy->AddComponent(std::move(rb));
+
     m_scene->AddActor(std::move(enemy));
 }
 

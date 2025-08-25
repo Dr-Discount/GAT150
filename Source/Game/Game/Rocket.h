@@ -7,8 +7,8 @@ public:
 	float speed = 350.0f;
 
 	Rocket() = default;
-	Rocket(viper::Transform transform, viper::res_t<viper::Texture> texture)
-		: Actor{ transform, texture } {
+	Rocket(viper::Transform transform)
+		: Actor{ transform} {
 	}
 
 	void Update(float dt) override;

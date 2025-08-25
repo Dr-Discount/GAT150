@@ -11,6 +11,7 @@
 #include "Framework/Actor.h"
 #include "Framework/Game.h"
 #include "Framework/Scene.h"
+#include "Framework/Object.h"
 
 // math
 #include "Math/Math.h"

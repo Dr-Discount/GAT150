@@ -3,6 +3,10 @@
 #include "EngineMinimal.h"
 #include "Engine.h"
 
+//components
+#include "Components/SpriteRenderer.h"
+#include "Components/RigidBody.h"
+
 //audio
 #include "Audio/AudioSystem.h"
 

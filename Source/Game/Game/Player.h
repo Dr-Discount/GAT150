@@ -11,8 +11,8 @@ public:
 
 public:
 	Player() = default;
-	Player(viper::Transform transform, viper::res_t<viper::Texture> texture)
-		: Actor{ transform, texture} {}
+	Player(viper::Transform transform)
+		: Actor{ transform} {}
 
 	void Update(float dt) override;
 	void OnCollision(Actor* other) override;

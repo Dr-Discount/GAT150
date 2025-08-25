@@ -1,14 +1,16 @@
 #pragma once
+#include "Object.h"
 #include "../Math/Transform.h"
 #include "../Renderer/Model.h"
 #include "../Renderer/Texture.h"
+#include "Component.h"
+#include "../Components//RendererComponent.h"
 #include <memory>
 #include <string>
 
 namespace viper {
-	class Actor {
+	class Actor : public Object{
 	public:
-		std::string name;
 		std::string tag;
 
 		bool destroyed{ false };
@@ -21,9 +23,8 @@ namespace viper {
 		class Scene* scene{ nullptr };
 	public:
 		Actor() = default;
-		Actor(Transform transform, res_t<Texture> texture) : 
-			transform(transform), 
-			m_texture{ texture } 
+		Actor(Transform transform) : 
+			transform(transform)
 		{}
 
 		virtual void Update(float dt);
@@ -35,8 +36,34 @@ namespace viper {
 
 		Transform& GetTransform() { return transform; }
 
+		void AddComponent(std::unique_ptr<Component> component);
+		
+		template<typename T>
+		T* GetComponent();
+
+		template<typename T>
+		std::vector<T*> GetComponents();
+
 	protected:
-		res_t<Texture> m_texture;
-		//std::shared_ptr<Model> m_model;
+		std::vector<std::unique_ptr<Component>> m_components;
 	};
+
+	template<typename T>
+	inline T* Actor::GetComponent() {
+		for (auto& component : m_components) {
+			auto result = dynamic_cast<T*>(component.get());
+			if (result) return result;
+		}
+		return nullptr;
+	}
+
+	template<typename T>
+	inline std::vector<T*> Actor::GetComponents() {
+		std::vector<T*> results;
+		for (auto& component : m_components) {
+			auto result = dynamic_cast<T*>(component.get());
+			if (result) results.push_back(result);
+		}
+		return results;
+	}
 }
