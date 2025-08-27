@@ -5,6 +5,7 @@
 
 //components
 #include "Components/SpriteRenderer.h"
+#include "Components/CircleCollider2D.h"
 #include "Components/RigidBody.h"
 
 //audio

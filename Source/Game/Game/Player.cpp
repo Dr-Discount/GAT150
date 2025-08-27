@@ -54,6 +54,10 @@ void Player::Update(float dt) {
 		auto rb = std::make_unique<viper::RigidBody>();
 		rocket->AddComponent(std::move(rb));
 
+		auto collider = std::make_unique<viper::CircleCollider2D>();
+		collider->radius = 15;
+		rocket->AddComponent(std::move(collider));
+
 		scene->AddActor(std::move(rocket));
 	}
 	Actor::Update(dt);

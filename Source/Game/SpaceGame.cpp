@@ -43,6 +43,10 @@ void SpaceGame::Update(float dt) {
 		rb->damping = 0.5f;
 		player->AddComponent(std::move(rb));
 
+		auto collider = std::make_unique<viper::CircleCollider2D>();
+		collider->radius = 50;
+		player->AddComponent(std::move(collider));
+
         m_scene->AddActor(std::move(player));
         m_gameState = GameState::Game;
     }
@@ -126,6 +130,10 @@ void SpaceGame::SpawnEnemy() {
     auto rb = std::make_unique<viper::RigidBody>();
     rb->damping = 1.0f;
     enemy->AddComponent(std::move(rb));
+
+	auto collider = std::make_unique<viper::CircleCollider2D>();
+	collider->radius = 60;
+	enemy->AddComponent(std::move(collider));
 
     m_scene->AddActor(std::move(enemy));
 }

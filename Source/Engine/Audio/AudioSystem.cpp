@@ -1,5 +1,6 @@
 #include "AudioSystem.h"  
 #include "../Core/StringHelper.h"
+#include "AudioClip.h"
 
 namespace viper {  
 	bool AudioSystem::CheckFmodResult(FMOD_RESULT result) {  
@@ -62,5 +63,12 @@ namespace viper {
 		if (!CheckFmodResult(result)) return false;  
 
 		return true;  
-	}  
+	}
+
+	bool AudioSystem::PlaySound(AudioClip& clip) {
+		FMOD_RESULT result = m_system->playSound(clip.m_sound, 0, false, nullptr);
+		if (!CheckFmodResult(result)) return false;
+
+		return true;
+	}
 }

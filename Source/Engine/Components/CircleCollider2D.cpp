@@ -8,10 +8,11 @@ namespace viper {
 	bool viper::CircleCollider2D::CheckCollision(ColliderComponent& other) {
 		float distance = (owner->transform.position - other.owner->transform.position).Length();
 		
-		//float distance = (actorA->transform.position - actorB->transform.position).Length();
-		//if (distance < actorA->GetRadius() + actorB->GetRadius())
-
-
+		auto collider = dynamic_cast<CircleCollider2D*>(&other);
+		if (collider) {
+			float radi = radius + collider->radius;
+			if (distance <= radi) return true;
+		}
 		return false;
 	}
 }

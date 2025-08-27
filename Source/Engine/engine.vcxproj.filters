@@ -134,6 +134,9 @@
     <ClInclude Include="Components\CircleCollider2D.h">
       <Filter>Source\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Audio\AudioClip.h">
+      <Filter>Source\Audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="engine.cpp">
@@ -189,6 +192,9 @@
     </ClCompile>
     <ClCompile Include="Components\CircleCollider2D.cpp">
       <Filter>Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\AudioClip.cpp">
+      <Filter>Source\Audio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

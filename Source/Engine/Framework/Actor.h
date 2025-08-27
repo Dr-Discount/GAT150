@@ -32,8 +32,6 @@ namespace viper {
 
 		virtual void OnCollision(Actor* other) = 0;
 
-		float GetRadius();
-
 		Transform& GetTransform() { return transform; }
 
 		void AddComponent(std::unique_ptr<Component> component);
