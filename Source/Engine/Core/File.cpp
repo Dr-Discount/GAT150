@@ -63,7 +63,7 @@ namespace viper {
         return directories;
     }
 
-    bool ReadTextFile(const std::string& path, std::string& content) {
+    /*bool ReadTextFile(const std::string& path, std::string& content) {
         std::ifstream file(path);
         std::string str;
         if (!file.is_open()) {
@@ -75,6 +75,13 @@ namespace viper {
 
 		std::cout << str << '\n';
         return true;
+    }*/
+
+    bool ReadTextFile(const std::string& path, std::string& content) {
+        std::ifstream file(path);
+        if (!file) return false;
+        content.assign((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+        return !content.empty();
     }
 
     bool WriteTextFile(const std::string& path, const std::string& content, bool append) {

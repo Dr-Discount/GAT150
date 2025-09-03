@@ -8,7 +8,7 @@ namespace viper {
 	bool Engine::Initialize() {
 	    m_renderer = std::make_unique<viper::Renderer>();
 		m_renderer->Initialize();
-		m_renderer->CreateWindow("Viper Engine", 1280, 1024);
+		m_renderer->CreateWindow("Viper Engine", 1280, 1024, false);
 		
 		m_input = std::make_unique<viper::InputSystem>();
 		m_input->Initialize();
@@ -29,6 +29,8 @@ namespace viper {
 	}
 
 	void Engine::Shutdown() {
+		Resources().Clear();
+
 		m_audio->Shutdown();
 		m_input->Shutdown();
 		m_renderer->Shutdown();

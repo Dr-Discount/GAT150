@@ -51,5 +51,38 @@ struct Vector2 {
 	}
 };
 
+template<typename T>
+std::ostream& operator << (std::ostream& stream, const Vector2<T>& V) {
+	stream << "{ " << V.x << ", " << V.y << " }";
+	return stream;
+}
+
+template<typename T>
+std::istream& operator >> (std::istream& stream, Vector2<T>& V) {
+	char ch = '\0';
+	if (!(stream >> std::ws >> ch) || ch != '{') {
+		stream.setstate(std::ios::failbit);
+		return stream;
+	}
+	if (!(stream >> std::ws >> V.x)) {
+		stream.setstate(std::ios::failbit);
+		return stream;
+	}
+	if (!(stream >> std::ws >> ch) || ch != ',') {
+		stream.setstate(std::ios::failbit);
+		return stream;
+	}
+	if (!(stream >> std::ws >> V.y)) {
+		stream.setstate(std::ios::failbit);
+		return stream;
+	}
+	if (!(stream >> std::ws >> ch) || ch != '}') {
+		stream.setstate(std::ios::failbit);
+		return stream;
+	}
+
+	return stream;
+}
+
 using ivec2 = Vector2<int>;
 using vec2 = Vector2<float>;

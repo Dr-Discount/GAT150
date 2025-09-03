@@ -1,6 +1,5 @@
 #pragma once
 #include "Framework/Actor.h"
-#include "Renderer/Model.h"
 #include "Core/Random.h"
 
 class Enemy : public viper::Actor {

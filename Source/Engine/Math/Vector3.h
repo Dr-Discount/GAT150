@@ -39,5 +39,46 @@ struct Vector3 {
 	float Length() { return viper::math::sqrtf(LenghtSqr()); }
 };
 
+template<typename T>
+std::ostream& operator << (std::ostream& stream, const Vector3<T>& V) {
+	stream << "{" << V.x << ", " << V.y << ", " << V.z << " }";
+	return stream;
+}
+
+template<typename T>
+std::istream& operator >> (std::istream& stream, Vector3<T>& V) {
+	char ch = '\0';
+	if (!(stream >> std::ws >> ch) || ch != '{') {
+		stream.setstate(std::ios::failbit);
+		return stream;
+	}
+	if (!(stream >> std::ws >> V.x)) {
+		stream.setstate(std::ios::failbit);
+		return stream;
+	}
+	if (!(stream >> std::ws >> ch) || ch != ',') {
+		stream.setstate(std::ios::failbit);
+		return stream;
+	}
+	if (!(stream >> std::ws >> V.y)) {
+		stream.setstate(std::ios::failbit);
+		return stream;
+	}
+	if (!(stream >> std::ws >> ch) || ch != ',') {
+		stream.setstate(std::ios::failbit);
+		return stream;
+	}
+	if (!(stream >> std::ws >> V.z)) {
+		stream.setstate(std::ios::failbit);
+		return stream;
+	}
+	if (!(stream >> std::ws >> ch) || ch != '}') {
+		stream.setstate(std::ios::failbit);
+		return stream;
+	}
+
+	return stream;
+}
+
 using ivec3 = Vector3<int>;
 using vec3 = Vector3<float>;

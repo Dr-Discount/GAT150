@@ -6,6 +6,7 @@
 #include "Core/Time.h"
 #include "Core/Logger.h"
 #include "Core/Singleton.h"
+#include "Core/Json.h"
 
 // framework
 #include "Framework/Actor.h"
