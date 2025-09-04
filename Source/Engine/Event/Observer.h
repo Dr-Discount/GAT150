@@ -2,7 +2,8 @@
 
 namespace viper {
 	class Observer {
-		virtual ~Observer() = default;
+	public:
+		virtual ~Observer();
 
 		virtual void OnNotify(const Event& event) = 0;
 	};

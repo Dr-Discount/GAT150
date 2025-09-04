@@ -45,6 +45,7 @@ void Player::OnCollision(viper::Actor* other) {
 	if (owner->tag != other->tag) {
 		if (other->tag == "enemy") {
 			owner->destroyed = true;
+			EVENT_NOTIFY(player_dead);
 			dynamic_cast<SpaceGame*>(owner->scene->GetGame())->OnPlayerDeath();
 		}
 	}

@@ -15,7 +15,13 @@ namespace viper {
 		}
 	}
 
-	void EventManager::Notify(const Event::id_t id, Event::data_t data) {
-		
+	void EventManager::Notify(const Event& event) {
+		auto it = m_observers.find(event.id);
+		if (it != m_observers.end()) {
+			auto& observers = it->second;
+			for (auto observer : observers) {
+				observer->OnNotify(event);
+			}
+		}
 	}
 }

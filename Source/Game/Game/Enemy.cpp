@@ -24,8 +24,8 @@ void Enemy::Update(float dt) {
 void Enemy::OnCollision(viper::Actor* other) {
 	if (owner->tag != other->tag) {
 		owner->destroyed = true;
+		EVENT_NOTIFY_DATA(add_points, 10);
 		viper::GetEngine().GetAudioSystem().PlaySound("bass");
-		owner->scene->GetGame()->AddPoints(10);
 	}
 }
 

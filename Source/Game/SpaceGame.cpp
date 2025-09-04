@@ -7,6 +7,9 @@
 
 
 bool SpaceGame::Initialize() {
+	OBSERVER_ADD(player_dead);
+    OBSERVER_ADD(add_points);
+
 	m_scene = std::make_unique<viper::Scene>(this);
 
     viper::json::document_t document;
@@ -109,6 +112,13 @@ void SpaceGame::Draw(viper::Renderer& renderer) {
 
 void SpaceGame::Shutdown() {
 	m_scene.reset();
+}
+
+void SpaceGame::OnNotify(const viper::Event& event) {
+    if (event.id == "add_points") {
+       AddPoints(std::get<int>(event.data));
+    }
+	std::cout << event.id << std::endl;
 }
 
 void SpaceGame::OnPlayerDeath() {

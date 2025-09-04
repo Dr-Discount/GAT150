@@ -30,6 +30,8 @@ namespace viper {
 
 	void Engine::Shutdown() {
 		Resources().Clear();
+		Factory::Instance().RemoveAll();
+		EventManager::Instance().RemoveAllObservers();
 
 		m_audio->Shutdown();
 		m_input->Shutdown();
