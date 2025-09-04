@@ -16,7 +16,7 @@ namespace viper {
 		void Update(float dt);
 		void Draw(class Renderer& renderer);
 
-		void AddActor(std::unique_ptr<Actor> actor);
+		void AddActor(std::unique_ptr<Actor> actor, bool start = true);
 		void RemoveAllActors(bool force = false);
 		
 		template<typename T = Actor>
@@ -27,6 +27,7 @@ namespace viper {
 
 		Game* GetGame() const { return m_game; }
 
+		void Load();
 		void Read(const json::value_t& value) override;
 	private:
 		Game* m_game{ nullptr };

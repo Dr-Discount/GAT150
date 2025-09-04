@@ -2,7 +2,7 @@
 #include "Framework/Component.h"
 #include "Core/Random.h"
 
-class Enemy : public viper::Component {
+class Enemy : public viper::Component, public viper::Collidable {
 public:
 	float speed = 100.0f;
 	float fireTime = 2.0f;
@@ -14,7 +14,6 @@ public:
 	CLASS_PROTOTYPE(Enemy)
 
 	void Update(float dt) override;
-	void OnCollision(class viper::Actor* other);
-
+	void OnCollision(class viper::Actor* other) override;
 	void Read(const viper::json::value_t& value) override;
 };

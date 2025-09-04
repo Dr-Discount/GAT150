@@ -191,8 +191,6 @@
     <Text Include="..\..\Build\Assets\Meshes\enemy.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Build\Assets\enemy.json" />
-    <None Include="..\..\Build\Assets\rocket.json" />
     <None Include="..\..\Build\Assets\scene.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

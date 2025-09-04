@@ -46,14 +46,15 @@ namespace viper {
 		}
 	}
 
-	void Scene::AddActor(std::unique_ptr<Actor> actor) {
+	void Scene::AddActor(std::unique_ptr<Actor> actor, bool start) {
 		actor->scene = this;
+		if (start) actor->Start();
 		m_actors.push_back(std::move(actor));
 	}
 
 	void Scene::RemoveAllActors(bool force) {
 		for (auto iter = m_actors.begin(); iter != m_actors.end();) {
-			if (!(*iter)->persistant || force) {
+			if (((*iter)->persistant) || force) {
 				iter = m_actors.erase(iter);
 			}
 			else {
@@ -78,8 +79,14 @@ namespace viper {
 				auto actor = Factory::Instance().Create<Actor>("Actor");
 				actor->Read(actorvalue);
 
-				AddActor(std::move(actor));
+				AddActor(std::move(actor), false);
 			}
+		}
+	}
+
+	void Scene::Load() {
+		for (auto& actor : m_actors) {
+			actor->Start();
 		}
 	}
 }

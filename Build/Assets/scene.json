@@ -12,7 +12,7 @@
         {
           "type": "Player",
           "speed": 600,
-          "rotationRate": 100,
+          "rotationRate": 130,
           "fireTime": 0.4
         },
         {

@@ -32,10 +32,12 @@ namespace viper {
 
 		CLASS_PROTOTYPE(Actor)
 
+		virtual void Start();
+		virtual void Destroyed();
 		virtual void Update(float dt);
 		virtual void Draw(class Renderer& renderer);
 
-		virtual void OnCollision(Actor* other) {}
+		virtual void OnCollision(Actor* other);
 
 		Transform& GetTransform() { return transform; }
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "Framework/Component.h"
 
-class Player : public viper::Component {
+class Player : public viper::Component, public viper::Collidable {
 public:
 	float speed = 500.0f;
 	float rotationRate = 180.0f;
@@ -12,7 +12,7 @@ public:
 	CLASS_PROTOTYPE(Player)
 
 	void Update(float dt) override;
-	void OnCollision(class viper::Actor* other);
+	void OnCollision(class viper::Actor* other) override;
 	
 	void Read(const viper::json::value_t& value) override;
 };

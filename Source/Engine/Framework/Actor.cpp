@@ -69,4 +69,23 @@ namespace viper {
 			}
 		}
 	}
+
+	void Actor::Start() {
+		for (auto& component : m_components) {
+			component->Start();	
+		}
+	}
+
+	void Actor::Destroyed() {
+		for (auto& component : m_components) {
+			component->Destroyed();
+		}
+	}
+
+	void Actor::OnCollision(Actor* other) {
+		auto collidable = GetComponents<Collidable>();
+		for (auto& col : collidable) {
+			col->OnCollision(other);
+		}
+	}
 }

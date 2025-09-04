@@ -67,11 +67,5 @@
     <None Include="..\..\Build\Assets\scene.json">
       <Filter>Source\Game\Assets</Filter>
     </None>
-    <None Include="..\..\Build\Assets\enemy.json">
-      <Filter>Source\Game\Assets</Filter>
-    </None>
-    <None Include="..\..\Build\Assets\rocket.json">
-      <Filter>Source\Game\Assets</Filter>
-    </None>
   </ItemGroup>
 </Project>

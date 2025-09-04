@@ -25,6 +25,14 @@
 #include "Resources/ResourcesManager.h"
 #include "Resources/Resource.h"
 
+// Event
+#include "Event/Event.h"
+#include "Event/Observer.h"
+#include "Event/EventManager.h"
+
+// Physics
+#include "Physics/Collidable.h"
+
 // third party
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
