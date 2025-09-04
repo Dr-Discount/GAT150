@@ -15,7 +15,18 @@ namespace viper {
 	}
 
 	void SpriteRenderer::Draw(Renderer& renderer) {
-		renderer.DrawTexture(Resources().Get<Texture>(textureName, renderer).get(), owner->transform.position.x, owner->transform.position.y, owner->transform.rotation, owner->transform.scale);
+		if (texture) {
+			if (textureRect.w > 0 && textureRect.h > 0) {
+				renderer.DrawTexture(*texture,
+					textureRect,
+					owner->transform.position.x,
+					owner->transform.position.y,
+					owner->transform.rotation,
+					owner->transform.scale);
+			} else {
+				renderer.DrawTexture(Resources().Get<Texture>(textureName, renderer).get(), owner->transform.position.x, owner->transform.position.y, owner->transform.rotation, owner->transform.scale);
+			}
+		}
 	}
 
 	void SpriteRenderer::Read(const json::value_t& value) {

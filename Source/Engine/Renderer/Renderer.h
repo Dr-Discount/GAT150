@@ -3,6 +3,8 @@
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include <SDL3_image/SDL_image.h>
+#include "../Math/Rect.h"
+
 
 namespace viper {
 	class Renderer {
@@ -29,6 +31,7 @@ namespace viper {
 		friend class Texture;
 		void DrawTexture(class Texture* texture, float x, float y);
 		void DrawTexture(class Texture* texture, float x, float y, float angle, float scale = 1);
+		void DrawTexture(class Texture& texture, const rect& sourceRect, float x, float y, float angle, float scale = 1);
 	private:
 		int m_width{ 0 };
 		int m_height{ 0 };

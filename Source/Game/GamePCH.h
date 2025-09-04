@@ -8,6 +8,7 @@
 #include "Components/MeshRenderer.h"
 #include "Components/CircleCollider2D.h"
 #include "Components/RigidBody.h"
+#include "Components/Animator.h"
 
 //audio
 #include "Audio/AudioSystem.h"
@@ -21,3 +22,5 @@
 #include "Renderer/Text.h"
 #include "Renderer/Font.h"
 #include "Renderer/Mesh.h"
+#include "Renderer/TextureAnimation.h"
+

@@ -191,6 +191,7 @@
     <Text Include="..\..\Build\Assets\Meshes\enemy.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Build\Assets\animation\bat_idle.json" />
     <None Include="..\..\Build\Assets\scene.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
