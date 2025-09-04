@@ -1,11 +1,17 @@
+#include "GamePCH.h"
 #include "SpaceGame.h"
 #include "Game/Player.h"
 #include "Game/Enemy.h"
 #include "Engine.h"
 #include "Game/GameData.h"
 
+
 bool SpaceGame::Initialize() {
 	m_scene = std::make_unique<viper::Scene>(this);
+
+    viper::json::document_t document;
+    viper::json::Load("scene.json", document);
+	m_scene->Read(document);
 
     m_titleText = std::make_unique<viper::Text>(viper::Resources().GetWithID<viper::Font>("title_font", "Righteous-Regular.ttf", 48));
 	m_scoreText = std::make_unique<viper::Text>(viper::Resources().GetWithID<viper::Font>("ui_font", "Righteous-Regular.ttf", 48));
@@ -30,33 +36,29 @@ void SpaceGame::Update(float dt) {
         m_gameState = GameState::StartRound;
         break;
     case SpaceGame::GameState::StartRound: {
-        viper::Transform transform{ vec2{600 , 512}, 0, 1.5f };
-        auto player = std::make_unique<Player>(transform);
-        player->name = "Player";
-        player->tag = "Player";
+		auto player = viper::Factory::Instance().Create<viper::Actor>("player");
+		m_scene->AddActor(std::move(player));
 
-		auto spriteRenderer = std::make_unique<viper::SpriteRenderer>();
-		spriteRenderer->textureName = "red_02.png";
-        player->AddComponent(std::move(spriteRenderer));
-        
-		auto rb = std::make_unique<viper::RigidBody>();
-		rb->damping = 0.5f;
-		player->AddComponent(std::move(rb));
-
-		auto collider = std::make_unique<viper::CircleCollider2D>();
-		collider->radius = 50;
-		player->AddComponent(std::move(collider));
-
-        m_scene->AddActor(std::move(player));
         m_gameState = GameState::Game;
     }
         break;
-    case SpaceGame::GameState::Game:
+    case SpaceGame::GameState::Game: {
         m_enemySpawnTimer -= dt;
         if (m_enemySpawnTimer <= 0.0f) {
             m_enemySpawnTimer = 4;
-			SpawnEnemy();
+
+            SpaceGame::SpawnEnemy();
         }
+
+        auto player = m_scene->GetActorByName<viper::Actor>("player");
+        if (player->fire) {
+            auto rocket = viper::Instantiate("rocket", player->transform);
+            rocket->transform.position += vec2{ 25, 0 }.Rotate(viper::math::degToRad(player->transform.rotation));
+            rocket->transform.rotation = player->transform.rotation;
+            m_scene->AddActor(std::move(rocket));
+            player->fire = false;
+        }
+    }
         break;
     case SpaceGame::GameState::PlayerDead:
 		m_stateTimer -= dt;
@@ -84,6 +86,7 @@ void SpaceGame::Update(float dt) {
 }
 
 void SpaceGame::Draw(viper::Renderer& renderer) {
+    m_scene->Draw(renderer);
     if (m_gameState == GameState::Title) {
         m_titleText->Create(renderer, "Asteroids", vec3{ 255, 255, 0 });
         m_titleText->Draw(renderer, 500, 400);
@@ -99,7 +102,6 @@ void SpaceGame::Draw(viper::Renderer& renderer) {
 	m_livesText->Create(renderer, "Lives: " + std::to_string(m_lives), vec3{ 255, 255, 255 });
 	m_livesText->Draw(renderer, (float)(renderer.GetWidth() - 200), 20.0f);
     
-    m_scene->Draw(renderer);
 
 	viper::GetEngine().GetPS().Draw(renderer);
 }
@@ -108,37 +110,18 @@ void SpaceGame::Shutdown() {
 	m_scene.reset();
 }
 
-void SpaceGame::SpawnEnemy() {
-    Player* player = dynamic_cast<Player*>(m_scene->GetActorByName("Player"));
-    vec2 playerPos = player ? player->GetTransform().position : vec2{ 0, 0 };
-    const float minDistance = 150.0f;
-
-    vec2 spawnPos;
-    do {
-        spawnPos = vec2{ viper::random::getReal() * 1280, viper::random::getReal() * 1024 };
-    } while ((spawnPos - playerPos).Length() < minDistance);
-
-    viper::Transform transform{ spawnPos, 0, 3 };
-    std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform);
-    enemy->speed = 400;
-    enemy->tag = "enemy";
-
-	auto spriteRenderer = std::make_unique<viper::SpriteRenderer>();
-	spriteRenderer->textureName = "Rock_1.png";
-	enemy->AddComponent(std::move(spriteRenderer));
-
-    auto rb = std::make_unique<viper::RigidBody>();
-    rb->damping = 1.0f;
-    enemy->AddComponent(std::move(rb));
-
-	auto collider = std::make_unique<viper::CircleCollider2D>();
-	collider->radius = 60;
-	enemy->AddComponent(std::move(collider));
-
-    m_scene->AddActor(std::move(enemy));
-}
-
 void SpaceGame::OnPlayerDeath() {
 	m_gameState = GameState::PlayerDead;
 	m_stateTimer = 2.0f;
+}
+
+void SpaceGame::SpawnEnemy() {
+	viper::Actor* player = m_scene->GetActorByName<viper::Actor>("player");
+    if (player) {
+        vec2 position = player->transform.position + 8 * viper::random::getReal(250.0f, 350.0f);
+		viper::Transform transform{ position, 0, 3.0f};
+
+        auto enemy = viper::Instantiate("enemy",transform);
+        m_scene->AddActor(std::move(enemy));
+    }
 }

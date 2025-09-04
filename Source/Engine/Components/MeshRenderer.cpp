@@ -3,6 +3,8 @@
 #include "../Renderer/mesh.h"
 
 namespace viper {
+	FACTORY_REGISTER(MeshRenderer)
+
 	void MeshRenderer::Update(float dt) {
 		//
 	}

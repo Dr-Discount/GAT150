@@ -1,4 +1,5 @@
 #pragma once
+#include "../Core/Serializable.h"
 #include <vector>
 #include <memory>
 #include <string>
@@ -8,7 +9,7 @@ namespace viper {
 	class Actor;
 	class Game;
 
-	class Scene {
+	class Scene : public Serializable {
 	public:
 		Scene(Game* game) : m_game(game) {}
 
@@ -16,7 +17,7 @@ namespace viper {
 		void Draw(class Renderer& renderer);
 
 		void AddActor(std::unique_ptr<Actor> actor);
-		void RemoveAllActors() { m_actors.clear(); }
+		void RemoveAllActors(bool force = false);
 		
 		template<typename T = Actor>
 		T* GetActorByName(const std::string& name);
@@ -26,9 +27,11 @@ namespace viper {
 
 		Game* GetGame() const { return m_game; }
 
+		void Read(const json::value_t& value) override;
 	private:
 		Game* m_game{ nullptr };
 		std::list<std::unique_ptr<Actor>> m_actors;
+
 	};
 
 	template<typename T>

@@ -1,0 +1,32 @@
+{
+  "actors": [
+    {
+      "name": "enemy",
+      "tag": "enemy",
+      "transform": {
+        "position": [ 0, 0 ],
+        "rotation": 0,
+        "scale": 3
+      },
+      "components": [
+        {
+          "type": "Enemy",
+          "speed": 350
+        },
+        {
+          "type": "SpriteRenderer",
+          "textureName": "Rock_1.png"
+        },
+        {
+          "type": "RigidBody",
+          "damping": 1,
+          "velocity": [ 0, 0 ]
+        },
+        {
+          "type": "CircleCollider2D",
+          "radius": 60
+        }
+      ]
+    }
+  ]
+}

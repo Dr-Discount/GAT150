@@ -1,0 +1,109 @@
+{
+  "prototypes": [
+    {
+      "name": "player",
+      "tag": "player",
+      "transform": {
+        "position": [ 640, 512 ],
+        "rotation": 0,
+        "scale": 1.5
+      },
+      "components": [
+        {
+          "type": "Player",
+          "speed": 600,
+          "rotationRate": 100,
+          "fireTime": 0.4
+        },
+        {
+          "type": "SpriteRenderer",
+          "textureName": "red_02.png"
+        },
+        {
+          "type": "RigidBody",
+          "damping": 1.5,
+          "velocity": [ 0, 0 ]
+        },
+        {
+          "type": "CircleCollider2D",
+          "radius": 45
+        }
+      ]
+    },
+    {
+      "name": "enemy",
+      "tag": "enemy",
+      "transform": {
+        "position": [ 0, 0 ],
+        "rotation": 0,
+        "scale": 3
+      },
+      "components": [
+        {
+          "type": "Enemy",
+          "speed": 350
+        },
+        {
+          "type": "SpriteRenderer",
+          "textureName": "Rock_1.png"
+        },
+        {
+          "type": "RigidBody",
+          "damping": 1,
+          "velocity": [ 0, 0 ]
+        },
+        {
+          "type": "CircleCollider2D",
+          "radius": 60
+        }
+      ]
+    },
+    {
+      "name": "rocket",
+      "tag": "rocket",
+      "lifespan": 1.5,
+      "transform": {
+        "position": [ 0, 0 ],
+        "rotation": 45,
+        "scale": 1
+      },
+      "components": [
+        {
+          "type": "Rocket",
+          "speed": 2000
+        },
+        {
+          "type": "SpriteRenderer",
+          "textureName": "Rocket.png"
+        },
+        {
+          "type": "RigidBody",
+          "damping": 1,
+          "velocity": [ 0, 0 ]
+        },
+        {
+          "type": "CircleCollider2D",
+          "radius": 15
+        }
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "name": "sprite",
+      "tag": "background",
+      "persistent": true,
+      "transform": {
+        "position": [ 800, 900 ],
+        "rotation": 0,
+        "scale": 1
+      },
+      "components": [
+        {
+          "type": "SpriteRenderer",
+          "textureName": "Space.png"
+        }
+      ]
+    }
+  ]
+}

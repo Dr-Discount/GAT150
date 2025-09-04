@@ -9,15 +9,17 @@
 #include <string>
 
 namespace viper {
-	class Actor : public Object{
+	class Actor : public Object {
 	public:
 		std::string tag;
 
 		bool destroyed{ false };
 		float lifespan{ 0.0f };
+		bool fire{ false };
 
 		vec2 velocity{ 0, 0 };
 		float damping{ 0.0f };
+		bool persistant{ false };
 
 		Transform transform{ {0, 0}, 0, 1 };
 		class Scene* scene{ nullptr };
@@ -26,11 +28,14 @@ namespace viper {
 		Actor(Transform transform) : 
 			transform(transform)
 		{}
+		Actor(const Actor& other);
+
+		CLASS_PROTOTYPE(Actor)
 
 		virtual void Update(float dt);
 		virtual void Draw(class Renderer& renderer);
 
-		virtual void OnCollision(Actor* other) = 0;
+		virtual void OnCollision(Actor* other) {}
 
 		Transform& GetTransform() { return transform; }
 
@@ -42,8 +47,11 @@ namespace viper {
 		template<typename T>
 		std::vector<T*> GetComponents();
 
+		void Read(const json::value_t& value) override;
+
 	protected:
 		std::vector<std::unique_ptr<Component>> m_components;
+
 	};
 
 	template<typename T>

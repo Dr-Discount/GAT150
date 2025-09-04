@@ -1,74 +1,58 @@
+#include "../GamePCH.h"
 #include "Player.h"
 #include "Rocket.h"
 #include "Math/Math.h"
 #include "GameData.h"
 #include <SDL3/SDL_scancode.h>
 #include "../SpaceGame.h"
+#include "Core/Factory.h"
+#include "Framework/Scene.h"
 
+FACTORY_REGISTER(Player)
 
 void Player::Update(float dt) {
-	viper::Particle particle;
-	particle.position = transform.position;
-	particle.velocity = vec2{ 2,0 };
-	particle.color = vec3{ 255, 255, 255 };
-	particle.lifespan = 2.0f;
-	viper::GetEngine().GetPS().AddParticle(particle);
-
 	float rotate = 0;
 	if (viper::GetEngine().GetInputSystem().GetKeyDown(SDL_SCANCODE_A)) rotate -= 1;
 	if (viper::GetEngine().GetInputSystem().GetKeyDown(SDL_SCANCODE_D)) rotate += 1;
 	
-	transform.rotation += (rotate * rotationRate) * dt;
+	owner->transform.rotation += (rotate * rotationRate) * dt;
 	
 	float thrust = 0;
 	if (viper::GetEngine().GetInputSystem().GetKeyDown(SDL_SCANCODE_W)) thrust = 1;
 	if (viper::GetEngine().GetInputSystem().GetKeyDown(SDL_SCANCODE_S)) thrust = -1;
 
 	vec2 direction{ 1, 0 };
-	vec2 force = direction.Rotate(viper::math::degToRad(transform.rotation)) * thrust * speed;
+	vec2 force = direction.Rotate(viper::math::degToRad(owner->transform.rotation)) * thrust * speed;
 	//velocity += force * dt;
-	auto rb = GetComponent<viper::RigidBody>();
+	auto rb = owner->GetComponent<viper::RigidBody>();
 	if (rb) {
 		rb->velocity += force * dt;
 	}
 
-	transform.position.x = viper::math::wrap(transform.position.x, 0.0f, (float)viper::GetEngine().GetRenderer().GetWidth());
-	transform.position.y = viper::math::wrap(transform.position.y, 0.0f, (float)viper::GetEngine().GetRenderer().GetHeight());
+	owner->transform.position.x = viper::math::wrap(owner->transform.position.x, 0.0f, (float)viper::GetEngine().GetRenderer().GetWidth());
+	owner->transform.position.y = viper::math::wrap(owner->transform.position.y, 0.0f, (float)viper::GetEngine().GetRenderer().GetHeight());
+
 
 	fireTimer -= dt;
 	if ((viper::GetEngine().GetInputSystem().GetKeyDown(SDL_SCANCODE_SPACE) && fireTimer || viper::GetEngine().GetInputSystem().GetMouseButtonPressed(viper::InputSystem::MouseButton::Left)) && fireTimer <= 0) {
 		fireTimer = fireTime;
 		viper::GetEngine().GetAudioSystem().PlaySound("bass");
-
-		viper::Transform transform{ this->transform.position, this->transform.rotation, 1.2 };
-		auto rocket = std::make_unique<Rocket>(transform);
-		rocket->speed = 2000.0f;
-		rocket->lifespan = 1.1f;
-		rocket->name = "rocket";
-		rocket->tag = "rocket";
-
-		auto spriteRenderer = std::make_unique<viper::SpriteRenderer>();
-		spriteRenderer->textureName = "Rocket.png";
-		rocket->AddComponent(std::move(spriteRenderer));
-
-		auto rb = std::make_unique<viper::RigidBody>();
-		rocket->AddComponent(std::move(rb));
-
-		auto collider = std::make_unique<viper::CircleCollider2D>();
-		collider->radius = 15;
-		rocket->AddComponent(std::move(collider));
-
-		scene->AddActor(std::move(rocket));
+		owner->fire = true;
 	}
-	Actor::Update(dt);
 }
 
-void Player::OnCollision(Actor* other) {
-	if (tag != other->tag) {
+void Player::OnCollision(viper::Actor* other) {
+	if (owner->tag != other->tag) {
 		if (other->tag == "enemy") {
-			destroyed = true;
-			dynamic_cast<SpaceGame*>(scene->GetGame())->OnPlayerDeath();
-			std::cout << "Player destroyed" << std::endl;
+			owner->destroyed = true;
+			dynamic_cast<SpaceGame*>(owner->scene->GetGame())->OnPlayerDeath();
 		}
 	}
+}
+
+void Player::Read(const viper::json::value_t& value) {
+	Object::Read(value);
+	JSON_READ(value, speed);
+	JSON_READ(value, rotationRate);
+	JSON_GET(value, fireTime);
 }

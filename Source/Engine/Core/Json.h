@@ -4,13 +4,21 @@
 #include "../Math/Vector2.h"
 #include "../Math/Vector3.h"
 
-namespace viper {
-	bool Load(const std::string& filename, rapidjson::Document& document);
+#define JSON_READ(value, data) viper::json::Read(value, #data, data)
+#define JSON_READ_NAME(value, name, data) viper::json::Read(value, name, data)
+#define JSON_HAS(value, name) value.HasMember(#name)
+#define JSON_GET(value, name) value[#name]
 
-	bool Read(const rapidjson::Value& value, const std::string& name, int& data);
-	bool Read(const rapidjson::Value& value, const std::string& name, float& data);
-	bool Read(const rapidjson::Value& value, const std::string& name, bool& data);
-	bool Read(const rapidjson::Value& value, const std::string& name, std::string& data);
-	bool Read(const rapidjson::Value& value, const std::string& name, vec2& data);
-	bool Read(const rapidjson::Value& value, const std::string& name, vec3& data);
+namespace viper::json {
+	using value_t = rapidjson::Value;
+	using document_t = rapidjson::Document;
+
+	bool Load(const std::string& filename, document_t& document);
+
+	bool Read(const value_t& value, const std::string& name, int& data, bool required = false);
+	bool Read(const value_t& value, const std::string& name, float& data, bool required = false);
+	bool Read(const value_t& value, const std::string& name, bool& data, bool required = false);
+	bool Read(const value_t& value, const std::string& name, std::string& data, bool required = false);
+	bool Read(const value_t& value, const std::string& name, vec2& data, bool required = false);
+	bool Read(const value_t& value, const std::string& name, vec3& data, bool required = false);
 }

@@ -18,6 +18,8 @@ namespace viper {
 		int GetLives() const { return m_lives; }
 
 	protected:
+		friend class Player;
+
 		int m_score{ 0 };
 		int m_lives{ 0 };
 		

@@ -7,6 +7,7 @@
 #include "Core/Logger.h"
 #include "Core/Singleton.h"
 #include "Core/Json.h"
+#include "Core/Factory.h"
 
 // framework
 #include "Framework/Actor.h"
