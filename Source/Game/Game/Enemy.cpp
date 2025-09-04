@@ -18,7 +18,10 @@ void Enemy::Update(float dt) {
 	owner->transform.position.x = viper::math::wrap(owner->transform.position.x, 0.0f, (float)viper::GetEngine().GetRenderer().GetWidth());
 	owner->transform.position.y = viper::math::wrap(owner->transform.position.y, 0.0f, (float)viper::GetEngine().GetRenderer().GetHeight());
 
-	//owner->Actor::Update(dt);
+}
+
+void Enemy::Start() {
+	movementDirection = { vec2{ viper::random::getReal(-1.0f, 1.0f), (float)viper::random::getReal(-1.0f, 1.0f) } };
 }
 
 void Enemy::OnCollision(viper::Actor* other) {

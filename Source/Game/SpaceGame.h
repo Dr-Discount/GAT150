@@ -12,6 +12,7 @@ public:
 		StartRound,
 		Game,
 		PlayerDead,
+		GameWon,
 		GameOver
 	};
 

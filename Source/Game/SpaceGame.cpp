@@ -75,6 +75,10 @@ void SpaceGame::Update(float dt) {
             } else m_gameState = GameState::StartRound;
         }
         break;
+    case SpaceGame::GameState::GameWon:
+        m_gameState = GameState::GameOver;
+        m_stateTimer = 3.0f;
+        break;
     case SpaceGame::GameState::GameOver:
 		m_stateTimer -= dt;
 		if (m_stateTimer <= 0.0f) {
@@ -117,6 +121,9 @@ void SpaceGame::Shutdown() {
 void SpaceGame::OnNotify(const viper::Event& event) {
     if (event.id == "add_points") {
        AddPoints(std::get<int>(event.data));
+       if (m_score >= 250) {
+           m_gameState = GameState::GameWon;
+       }
     }
 	std::cout << event.id << std::endl;
 }
@@ -130,9 +137,16 @@ void SpaceGame::SpawnEnemy() {
 	viper::Actor* player = m_scene->GetActorByName<viper::Actor>("player");
     if (player) {
         vec2 position = player->transform.position + 8 * viper::random::getReal(250.0f, 350.0f);
-		viper::Transform transform{ position, 0, 3.0f};
+        viper::Transform transform{ position, 0, 3.0f };
 
-        auto enemy = viper::Instantiate("enemy",transform);
-        m_scene->AddActor(std::move(enemy));
+        int rand = viper::random::getInt(1, 3);
+        if (rand == 3) {
+            auto enemy = viper::Instantiate("bat", transform);
+            m_scene->AddActor(std::move(enemy));
+        }
+        else {
+            auto enemy = viper::Instantiate("enemy", transform);
+            m_scene->AddActor(std::move(enemy));
+        }
     }
 }
