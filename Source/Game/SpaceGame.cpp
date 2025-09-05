@@ -49,7 +49,7 @@ void SpaceGame::Update(float dt) {
     case SpaceGame::GameState::Game: {
         m_enemySpawnTimer -= dt;
         if (m_enemySpawnTimer <= 0.0f) {
-            m_enemySpawnTimer = 4;
+            m_enemySpawnTimer = 3;
 
             SpaceGame::SpawnEnemy();
         }
